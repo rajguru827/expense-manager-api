@@ -8,6 +8,7 @@ const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/users');
 const accountTypeRoutes = require('./api/routes/accountTypes');
+const expenseCategoryRoutes = require('./api/routes/expenseCategories');
 const accountRoutes = require('./api/routes/accounts');
 
 mongoose.connect('mongodb+srv://dbUser:8142188847@cluster0-ke2qb.mongodb.net/test?retryWrites=true', {
@@ -34,7 +35,8 @@ app.use((req, res, next) => {
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/user', userRoutes);
-app.use('/accountType', accountTypeRoutes);
+app.use('/accountType', accountTypeRoutes)
+app.use('/expenseCategory', expenseCategoryRoutes)
 app.use('/accounts', accountRoutes);
 
 app.use((req, res, next) => {

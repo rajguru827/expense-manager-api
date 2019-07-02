@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
-const AccountType = require('../models/accountType');
+const ExpenseCategory = require('../models/expenseCategory');
 
 router.get('/', (req, res, next) => {
-    AccountType.find()
+    ExpenseCategory.find()
         .exec()
         .then(docs => {
             const response = {
                 count: docs.length,
-                accountTypes: docs
+                expenseCategories: docs
             };
             res.status(200).json(response)
         })
@@ -21,15 +21,15 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    const accountType = new AccountType({
+    const expenseCategory = new ExpenseCategory({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         description: req.body.description
     });
-    accountType.save().then(result => {
+    expenseCategory.save().then(result => {
         res.status(201).json({
-            message: 'Created Account Type successfully.',
-            accountType: {
+            message: 'Created Expense Category successfully.',
+            expenseCategory: {
                 name: result.name,
                 description: result.description,
                 _id: result._id
