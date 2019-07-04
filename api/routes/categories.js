@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
-const IncomeCategory = require('../models/incomeCategory');
+const Category = require('../models/category');
 
 router.get('/', (req, res, next) => {
-    IncomeCategory.find()
+    Category.find()
         .exec()
         .then(docs => {
             const response = {
                 count: docs.length,
-                incomeCategories: docs
+                categories: docs
             };
             res.status(200).json(response)
         })
@@ -21,17 +21,21 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    const incomeCategory = new IncomeCategory({
+    const category = new Category({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        type: req.body.type,
+        createdDate: new Date()
     });
-    incomeCategory.save().then(result => {
+    category.save().then(result => {
         res.status(201).json({
-            message: 'Created Income Category successfully.',
-            incomeCategory: {
+            message: 'Created Category successfully.',
+            category: {
                 name: result.name,
                 description: result.description,
+                type: result.type,
+                createdDate: result.createdDate,
                 _id: result._id
             }
         });
