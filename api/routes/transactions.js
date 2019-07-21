@@ -8,7 +8,7 @@ const Account = require('../models/account');
 
 router.get('/', checkAuth, (req, res, next) => {
     Transaction.find({ user: req.userData.userId })
-        .populate('user category')
+        .populate('category')
         .exec()
         .then(docs => {
             res.status(200).json({
