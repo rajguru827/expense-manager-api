@@ -1,6 +1,4 @@
 const express = require('express');
-
-const serverless = require("serverless-http");
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -15,6 +13,7 @@ const accountRoutes = require('./api/routes/accounts');
 const transactionRoutes = require('./api/routes/transactions');
 
 mongoose.connect('mongodb+srv://dbUser:8142188847@cluster0-ke2qb.mongodb.net/test?retryWrites=true', {
+    useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true
 });
@@ -59,4 +58,4 @@ app.use((error, req, res, next) => {
     });
 });
 
-module.exports.handler  =  serverless(app);
+module.exports = app;
