@@ -36,16 +36,16 @@ router.post('/', checkAuth, (req, res, next) => {
         .exec()
         .then(result => {
             if (result.type === 1) {
-                transaction.credit = req.body.amount
+                transaction.credit = parseFloat(req.body.amount)
             } else if (result.type === 2) {
-                transaction.debit = req.body.amount
+                transaction.debit =  parseFloat(req.body.amount)
             }
             transaction.save().then(result1 => {
                 Account.findById(req.body.account)
                     .exec()
                     .then(response => {
-                        let bal = result.type === 1 ? (response.initialBalance + req.body.amount) : (response.initialBalance - req.body.amount);
-                        Account.updateOne({ _id: req.body.account }, { $set: { initialBalance: bal } })
+                        let bal = result.type === 1 ? (response.initialBalance + parseFloat(req.body.amount)) : (response.initialBalance - parseFloat(req.body.amount));
+                        Account.updateOne({ _id: req.body.account, user: req.userData.userId }, { $set: { initialBalance: bal } })
                             .exec()
                             .then(data => {
                                 res.status(201).json({
