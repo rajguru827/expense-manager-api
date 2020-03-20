@@ -12,7 +12,7 @@ const categoryRoutes = require('./api/routes/categories');
 const accountRoutes = require('./api/routes/accounts');
 const transactionRoutes = require('./api/routes/transactions');
 
-mongoose.connect('mongodb+srv://dbUser:8142188847@cluster0-ke2qb.mongodb.net/test?retryWrites=true', {
+mongoose.connect('mongodb://localhost:27017/expense-manager', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true
