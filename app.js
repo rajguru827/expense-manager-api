@@ -4,8 +4,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const productRoutes = require('./api/routes/products');
-const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/users');
 const accountTypeRoutes = require('./api/routes/accountTypes');
 const categoryRoutes = require('./api/routes/categories');
@@ -35,8 +33,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/products', productRoutes);
-app.use('/orders', orderRoutes);
 app.use('/user', userRoutes);
 app.use('/accountType', accountTypeRoutes)
 app.use('/category', categoryRoutes)
