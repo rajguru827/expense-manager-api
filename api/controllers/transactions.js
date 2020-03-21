@@ -21,51 +21,41 @@ exports.transactions_get_all = (req, res, next) => {
         });
 }
 
-exports.transactions_create_transaction = (req, res, next) => {
-    const transaction = new Transaction({
-        _id: new mongoose.Types.ObjectId(),
-        category: req.body.category,
-        description: req.body.description,
-        date: new Date(),
-        account: req.body.account,
-        user: req.userData.userId
-    });
-    Category.findById(req.body.category)
-        .exec()
-        .then(result => {
-            if (result.type === 1) {
-                transaction.credit = parseFloat(req.body.amount)
-            } else if (result.type === 2) {
-                transaction.debit = parseFloat(req.body.amount)
-            }
-            transaction.save().then(result1 => {
-                Account.findById(req.body.account)
-                    .exec()
-                    .then(response => {
-                        let bal = result.type === 1 ? (response.initialBalance + parseFloat(req.body.amount)) : (response.initialBalance - parseFloat(req.body.amount));
-                        Account.updateOne({ _id: req.body.account, user: req.userData.userId }, { $set: { initialBalance: bal } })
-                            .exec()
-                            .then(data => {
-                                res.status(201).json({
-                                    message: 'Created Account Type successfully.',
-                                    transaction: result1
-                                });
-                            })
-                            .catch(err => {
-                                res.status(500).json({
-                                    error: err
-                                });
-                            })
-                    })
-                    .catch(err => {
-                        res.status(500).json({
-                            error: err
-                        });
-                    })
-            }).catch(err => {
-                res.status(500).json({
-                    error: err
-                });
-            })
+exports.transactions_create_transaction = async (req, res, next) => {
+    try {
+        const transaction = new Transaction({
+            _id: new mongoose.Types.ObjectId(),
+            category: req.body.category,
+            description: req.body.description,
+            date: new Date(),
+            account: req.body.account,
+            user: req.userData.userId
         });
+
+        const category = await Category.findById(req.body.category);
+
+        if (category.type === 'income') {
+            transaction.credit = parseFloat(req.body.amount)
+        } else {
+            transaction.debit = parseFloat(req.body.amount)
+        }
+
+        const account = await Account.findById(req.body.account);
+        let bal = category.type === 'income' ? (account.initialBalance + parseFloat(req.body.amount)) : (account.initialBalance - parseFloat(req.body.amount));
+        await Account.updateOne({ _id: req.body.account, user: req.userData.userId }, { $set: { initialBalance: bal } })
+
+        transaction.save().then(docs => {
+            res.status(200).json({
+                count: docs.length,
+                transaction: docs
+            });
+        }).catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+    } catch (err) {
+        throw err;
+    }
+
 }
