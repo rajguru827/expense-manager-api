@@ -9,7 +9,14 @@ const categorySchema = mongoose.Schema({
         enum: ['income', 'expense'],
         required: true
     },
-    createdDate: { type: Date, required: true }
+    createdDate: {
+        type: Date,
+        default: Date.now
+    },
+    updatedDate: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model('Category', categorySchema);

@@ -28,11 +28,7 @@ exports.accountTypes_create_accountType = (req, res, next) => {
     accountType.save().then(result => {
         res.status(201).json({
             message: 'Created Account Type successfully.',
-            accountType: {
-                name: result.name,
-                description: result.description,
-                _id: result._id
-            }
+            accountType: result
         });
     }).catch(err => {
         res.status(500).json({
