@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./api/routes/users');
 const accountTypeRoutes = require('./api/routes/accountTypes');
 const categoryRoutes = require('./api/routes/categories');
+const subCategoryRoutes = require('./api/routes/subCategories');
 const accountRoutes = require('./api/routes/accounts');
 const transactionRoutes = require('./api/routes/transactions');
 
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 app.use('/user', userRoutes);
 app.use('/accountType', accountTypeRoutes)
 app.use('/category', categoryRoutes)
+app.use('/subCategory', subCategoryRoutes)
 app.use('/accounts', accountRoutes);
 app.use('/transactions', transactionRoutes)
 

@@ -4,6 +4,7 @@ const Category = require('../models/category');
 
 exports.categories_get_all = (req, res, next) => {
     Category.find()
+        .populate('subCategories')
         .exec()
         .then(docs => {
             const response = {
