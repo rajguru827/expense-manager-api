@@ -34,10 +34,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/', (req, res, next) => {
-    res.send('OK')
-})
-
 app.use('/user', userRoutes);
 app.use('/accountType', accountTypeRoutes)
 app.use('/category', categoryRoutes)
