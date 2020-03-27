@@ -11,7 +11,7 @@ const subCategoryRoutes = require('./api/routes/subCategories');
 const accountRoutes = require('./api/routes/accounts');
 const transactionRoutes = require('./api/routes/transactions');
 
-mongoose.connect('mongodb://localhost:27017/expense-manager', {
+mongoose.connect('mongodb+srv://gururaj:<password>@cluster0-gprms.mongodb.net/test?retryWrites=true&w=majority', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true
