@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 const Transaction = require('../models/transaction');
-const Category = require('../models/category');
+const UserCategory = require('../models/userCategory');
 const Account = require('../models/account');
 
 exports.transactions_get_all = (req, res, next) => {
@@ -34,7 +34,7 @@ exports.transactions_create_transaction = async (req, res, next) => {
 
         //get category type
         //Todo: category type from client
-        const category = await Category.findById(req.body.category);
+        const category = await UserCategory.findById(req.body.category);
 
         if (category.type === 'income') {
             transaction.credit = parseFloat(req.body.amount)

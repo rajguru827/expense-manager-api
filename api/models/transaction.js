@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const transactionSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'UserCategory', required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
     credit: { type: Number, required: function() {

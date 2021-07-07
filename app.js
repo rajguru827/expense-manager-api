@@ -10,8 +10,10 @@ const categoryRoutes = require('./api/routes/categories');
 const subCategoryRoutes = require('./api/routes/subCategories');
 const accountRoutes = require('./api/routes/accounts');
 const transactionRoutes = require('./api/routes/transactions');
+const userCategories = require('./api/routes/userCategories');
+const userSubCategories = require('./api/routes/userSubCategories');
 
-mongoose.connect('mongodb+srv://gururaj:10kP1@0550@cluster0-gprms.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect('mongodb://localhost:27017/expense-manager', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true
@@ -40,6 +42,8 @@ app.use('/category', categoryRoutes)
 app.use('/subCategory', subCategoryRoutes)
 app.use('/accounts', accountRoutes);
 app.use('/transactions', transactionRoutes)
+app.use('/userCategories', userCategories)
+app.use('/userSubCategories', userSubCategories)
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
